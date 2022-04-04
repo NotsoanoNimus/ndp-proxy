@@ -1,0 +1,23 @@
+# The interface name on which the ndp-proxy daemon should listen promiscuously.
+interface = ens224
+
+# The level of detail at which the program should log.
+# 0 = quiet (very suppressed logging) -- note that this does NOT disable syslog messages in daemon mode
+# 1 = normal output (outputs only on startup and when a packet is proxied to a client successfully)
+# 2 = most verbose output (very detailed description of operations)
+# 3 = debug logging (hexidecimal packet capturing)
+verbosity = 1
+
+# The daemonization file which keeps track of the program's process ID.
+pidfile = /var/run/ndp-proxy.pid
+
+# The file to which both output streams from the binary are logged (STDOUT/STDERR).
+#  This only happens when the application is daemonized with the '-d' flag.
+#  It's useful for capturing all debug-logging information that doesn't make it to syslog.
+logfile = /var/log/ndp-proxy.log
+
+# The IPv6 subnet(s) for which to proxy NDP responses.
+#  This list can be up to 256 entries, and can be added to with CLI options, using the '-n' flag.
+proxynet = 2001:DB8:1234::/64
+proxynet = 2001:DB8:FFFF::/48
+proxynet = 2001:DB8:1:2:3:4:5:6/128

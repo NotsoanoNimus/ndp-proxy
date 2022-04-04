@@ -1,4 +1,4 @@
-#.SILENT:
+#.SILENT
 
 main: ndp-proxy
 
@@ -13,5 +13,5 @@ install-init: /etc/init.d/ndp-proxy
 	install -o root -g root -m 744 ndp-proxy /usr/sbin/ndp-proxy
 
 ndp-proxy: ndp-proxy.c
-	gcc ndp-proxy.c -o ndp-proxy
+	gcc -pthread ndp-proxy.c -o ndp-proxy
 
