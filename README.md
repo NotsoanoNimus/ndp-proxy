@@ -1,33 +1,35 @@
 NDP Proxy
 =========
 
-This software is an answer to the fact that the Linux kernel does not support to proxy NDP packets for a whole IPv6 range but only for a given set of addresses.
+This software is an answer to the fact that the Linux kernel does not support proxy of ICMPv6 Neighbor Discovery Protocol packets for whole IPv6 subnets, but only for a given set of single addresses.
 
-`ndp-proxy` listen to an interface, and when it receive an NDP Network Solicitation packet for an IPv6 in a given subnet, it will answer a Network Advertisement packet as if that IP was actually bound to the interface.
-This allows to route a subnet through a machine acting as a router without having to configure a route to that machine on upstream routers. It is useful especially if upstream routers are managed by somebody else and cant be modified.
+`ndp-proxy` binds promiscuously to an interface, and when it receives an NDP Network Solicitation packet for an IPv6 address in any of one of many configured subnets, it will answer with a _Network Advertisement_ packet, similar to an IPv4 Proxy ARP mechanism.
+
+This enables the ability to easily route whole subnets through a machine acting as a router (or an address-space black-hole), without needing to configure a route to that machine on upstream routers. It is useful especially if upstream routers are managed by somebody else and cannot be modified.
 
 Usage
 ------
-    /usr/sbin/ndp-proxy <options>
+The binary is intended to be used as a background daemon, managed with systemd. To run as a daemon, the `-d` option should always be provided.
 
-    Options:
-     -h --help                              Display this help
-     -i --interface <interface>             Sets the interface
-     -m --netmask <netmask>                 Sets the netmask
-     -n --network <network>                 Sets the network
-     -p --pidfile <pidfile>                 Sets the pidfile
-     -d --daemon                            Daemon mode
-     -v --verbose                           Verbose mode
-     -q --quiet                             Quiet mode
+```
+Options:
+ -h --help                    Display this help
+ -c --configfile <configfile> Set the configuration file location manually
+ -i --interface <interface>   Set the interface manually
+ -n --network <network>       Add a network to proxy (NET::/CIDR format)
+ -p --pidfile <pidfile>       Set the pidfile location manually
+ -l --logfile <logfile>       Set the logfile location manually
+ -d --daemon                  Daemon mode; forks the running process into the background
+ -q --quiet                   Quiet mode; disables non-error output and logging forcibly
+                                Note however that this will NOT disable syslogging
+ -v --verbosity <level>       Verbosity level; overridden by Quiet mode
+    0 = same as quiet mode
+    1 = [default] output level; logs on startup and when a packet is proxied
+    2 = descriptive output level; very detailed description of operations
+    3 = debug logging; hexadecimal packet capturing
+```
 
 Build
 ------
+To install the daemon, simply run the following command in the project's base directory:
     make && make install
-
-An init script can also be installed with :
-
-    make install-init
-
-Options can then be set in `/etc/sysconfig/ndp-proxy` or `/etc/default/ndp-proxy` like this :
-
-    OPTIONS="-i eth0 -n ::1 -d"

@@ -1,3 +1,22 @@
+/*
+ * NDP-PROXY Neighbor Discovery Proxy Daemon
+ *
+ * All modifications on fork are copyright 2022, @NotsoanoNimus on GitHub.
+ *  https://github.com/NotsoanoNimus/ndp-proxy
+ *
+ * I would like to thank the original author for the core NDP mechanism in this simple application.
+ *  It has been a huge help in an enterprise environment while staging test subnets for
+ *  intermediate IPv6 deployment, without needing to deal with the hassles of routing protocols
+ *  or service provider nonsense until the proof-of-concept and prototypes have been completed.
+ * Thank you!
+ *
+ * Licensed under the GNU General Public License, version 2. See LICENSING for details.
+ *  Unfortunately, I cannot legally change the original license on this.
+ *
+ */
+
+
+
 #include <ctype.h>
 #include <unistd.h>
 #include <stdlib.h>
