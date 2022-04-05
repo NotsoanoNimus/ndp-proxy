@@ -1,9 +1,9 @@
 NDP Proxy
 =========
 
-This software is an answer to the fact that the Linux kernel does not support proxy of ICMPv6 Neighbor Discovery Protocol packets for whole IPv6 subnets, but only for a given set of single addresses.
+This software is an answer to the fact that the Linux kernel does not support proxying of ICMPv6 Neighbor Discovery Protocol packets for whole IPv6 subnets, but only for a given set of single addresses.
 
-`ndp-proxy` binds promiscuously to an interface, and when it receives an NDP Network Solicitation packet for an IPv6 address in any of one of many configured subnets, it will answer with a _Network Advertisement_ packet, similar to an IPv4 Proxy ARP mechanism.
+`ndp-proxy` binds promiscuously to an interface, and when it receives an NDP _Network Solicitation_ packet for an IPv6 address in any of one of many configured subnets, it will answer with a _Network Advertisement_ packet, similar to an IPv4 Proxy ARP mechanism.
 
 This enables the ability to easily route whole subnets through a machine acting as a router (or an address-space black-hole), without needing to configure a route to that machine on upstream routers. It is useful especially if upstream routers are managed by somebody else and cannot be modified.
 
@@ -32,4 +32,7 @@ Options:
 Build
 ------
 To install the daemon, simply run the following command in the project's base directory:
-    make && make install
+
+```
+make && make install
+```
